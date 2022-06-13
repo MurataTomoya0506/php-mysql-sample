@@ -21,19 +21,18 @@ if(!$link) {
 }
 
 // SQL文を生成
-$query = "SELECT Code, Name, Continent, Region, SurfaceArea   country ORDER BY Code LIMIT 30";
+$query = "SELECT Code, Name, Continent, Region, SurfaceArea  FROM country ORDER BY Code LIMIT 30";
 if($submit === "seach"){
     $wheres =[];
     if($name !== ""){
         $wheres[] = "Name LIKE '%{$name}%'";
     }
-    $wheres =[];
     if($region !== ""){
         $wheres[] = "region LIKE '%{$region}%'";
     }
 
-    if($region !== ""){
-      $wheres[] = "Continent = '{$region}%'";
+    if($continent !== ""){
+      $wheres[] = "Continent = '{$continent}'";
   }
 if(!empty($indepyear_min) && !empty($indepyear_max)){
     $wheres[] = "IndepYear BETWEEN{$indepyear_min} AND {$indepyear_max}";
@@ -68,7 +67,7 @@ $result = mysqli_query($link, $query);
 // DBコネクションを切断
 mysqli_close($link);
 } catch(\Exception $e){}
-die("例外処理");
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -93,28 +92,28 @@ die("例外処理");
       </div>
 
     <div class="row mb-3">
-      <label for="inputEmail3" class="col-sm-2 col-form-label">	continent</label>
+      <label for="inputEmail3" class="col-sm-2 col-form-label">Region</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="inputEmail3" name="	continent" value="<?php echo $continent; ?>">
+        <input type="text" class="form-control" id="inputEmail3" name="region" value="<?php echo $region; ?>">
       </div>
     </div>
 
     <div class="row mb-3">
-      <label for="Continent" class="col-sm-2 col-form-label">region</label>
+      <label for="Continent" class="col-sm-2 col-form-label">Continent</label>
       <div class="col-sm-10">
-        <select class="form-select"  id="region" name="region">
-          <option <?php if($continent === 'Asia') echo 'selected'; ?> value="1">Asia</option>
-          <option <?php if($continent === 'Europe') echo 'selected' ; ?> value="2">Europe</option>
-          <option <?php if($continent === 'Noreth America') echo 'selected' ; ?> value="3">Noreth America</option>
-          <option <?php if($continent === 'Africa') echo 'selected' ; ?> value="4">Africa</option>
-          <option <?php if($continent === 'Oceania') echo 'selected' ; ?> value="5">Oceania</option>
-          <option <?php if($continent === 'Antarctica') echo 'selected' ; ?> value="6">Antarctica</option>
-          <option <?php if($continent === 'South America') echo 'selected' ; ?> value="7">South America</option>
+        <select class="form-select"  id="region" name="continent">
+          <option <?php if($continent === 'Asia') echo 'selected'; ?> value="Asia">Asia</option>
+          <option <?php if($continent === 'Europe') echo 'selected' ; ?> value="Europe">Europe</option>
+          <option <?php if($continent === 'Noreth America') echo 'selected' ; ?> value="Noreth America">Noreth America</option>
+          <option <?php if($continent === 'Africa') echo 'selected' ; ?> value="Africa">Africa</option>
+          <option <?php if($continent === 'Oceania') echo 'selected' ; ?> value="Oceania">Oceania</option>
+          <option <?php if($continent === 'Antarctica') echo 'selected' ; ?> value="Antarctica">Antarctica</option>
+          <option <?php if($continent === 'South America') echo 'selected' ; ?> value="South America">South America</option>
         </select>
       </div>
     </div>
     <div class="row mb-3">
-      <label for="inputEmail3" class="col-sm-2 col-form-label">indepyear</label>
+      <label for="inputEmail3" class="col-sm-2 col-form-label">IndepYear</label>
       <div class="col-sm-10">
         <div class="input-group">
           <input type="number" class="form-control" id="inputEmail3" id="indepyear_min"
@@ -127,10 +126,10 @@ die("例外処理");
 
 
     <div class="row mb-3">
-      <label for="inputEmail3" class="col-sm-2 col-form-label">surfacearear</label>
+      <label for="inputEmail3" class="col-sm-2 col-form-label">SurfaceArear</label>
       <div class="col-sm-10">
         <div class="input-group">
-          <input type="number" class="form-control" id="inputEmail3" id="surfacearear_min"
+          <input type="number" step="0.01" class="form-control" id="inputEmail3" id="surfacearear_min"
             value="<?php echo $surfacearear_min; ?>">
           <div class="input-group-text">~</div>
           <input type="number" step="0.01" class="form-control" id="inputEmail3" id="surfacearear_min"
